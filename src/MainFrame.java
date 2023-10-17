@@ -164,17 +164,27 @@ public class MainFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+            // TEACHERS
+            if(e.getSource() == navTeachersButton){
+                mainPanel.removeAll();
+                mainPanel.add(new TeachersPanel());
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+            // ADD STUDENT
             if(e.getSource() == addStudentButton){
                 mainPanel.removeAll();
                 mainPanel.add(new AddStudentPanel());
                 mainPanel.revalidate();
                 mainPanel.repaint();
             }
+            // REPORT
             if(e.getSource() == reportButton){
                 mainPanel.removeAll();
                 mainPanel.add(new ReportPanel());
                 mainPanel.revalidate();
                 mainPanel.repaint();
             }
+
     }
 }

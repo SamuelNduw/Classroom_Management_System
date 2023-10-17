@@ -11,6 +11,7 @@ public class AddStudentPanel extends JPanel implements ActionListener {
         this.setBackground(Color.decode("#787878"));
         this.setLayout(null);
 
+
         // Add Student to your class LABEL
         JLabel topLabel = new JLabel("ADD STUDENT");
         topLabel.setBounds(325, 50, 300, 50);
