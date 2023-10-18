@@ -11,7 +11,7 @@ public class DBConnection {
     public ArrayList<TeacherItem> retrieveTeacher(){
         teachers = new ArrayList<TeacherItem>();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/classroommanagement","root","");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/classroommanagement","root","12Rubyjanuarysnow2018");
 
             // Create a statement object
             Statement stmt = conn.createStatement();
