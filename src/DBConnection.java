@@ -5,13 +5,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DBConnection {
+    private String password = "";
 
     ArrayList<TeacherItem> teachers;
     TeacherItem teacher;
     public ArrayList<TeacherItem> retrieveTeacher(){
         teachers = new ArrayList<TeacherItem>();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/classroommanagement","root","12Rubyjanuarysnow2018");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/classroommanagement","root",password);
 
             // Create a statement object
             Statement stmt = conn.createStatement();
@@ -30,6 +31,7 @@ public class DBConnection {
                 // Do something with the data
                 teacher = new TeacherItem(firstName, lastName, subject);
                 teachers.add(teacher);
+                System.out.println(firstName);
             }
 
             // Close the result set, statement, and connection objects
@@ -40,6 +42,26 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
         return teachers;
+    }
+
+    public void insertStudent(String firstName, String lastName, String email) {
+        String sql = "UPDATE Teacher SET First_Name = ?, Last_Name = ? WHERE Teacher_id = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/classroommanagement","root", password)) {
+            // Set the Callable statement
+            CallableStatement cstmt = conn.prepareCall("{call insertStudentDetails(?, ?, ?)}");
+
+            // Set the values for the CallableStatement
+            cstmt.setString(1, firstName);
+            cstmt.setString(2, lastName);
+            cstmt.setString(3, email);
+
+            // Execute the insert
+            cstmt.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

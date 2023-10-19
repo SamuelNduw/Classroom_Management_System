@@ -2,8 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import emailValidator.EmailValidator;
 
 public class AddStudentPanel extends JPanel implements ActionListener {
+    PlaceholderTextField first_name;
+    PlaceholderTextField last_name;
+    PlaceholderTextField email;
 
     JButton addButton;
     AddStudentPanel(){
@@ -27,13 +31,13 @@ public class AddStudentPanel extends JPanel implements ActionListener {
         this.add(studentIconLabel);
 
         // Form Input Fields
-        PlaceholderTextField first_name = new PlaceholderTextField("First Name");
+        first_name = new PlaceholderTextField("First Name");
         first_name.setBounds(550, 275, 310, 40);
         this.add(first_name);
-        PlaceholderTextField last_name = new PlaceholderTextField("Last Name");
+        last_name = new PlaceholderTextField("Last Name");
         last_name.setBounds(550, 325, 310, 40);
         this.add(last_name);
-        PlaceholderTextField email = new PlaceholderTextField("Email");
+        email = new PlaceholderTextField("Email");
         email.setBounds(550, 375, 310, 40);
         this.add(email);
 
@@ -58,8 +62,30 @@ public class AddStudentPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // ADD button is pressed
         if(e.getSource() == addButton){
+            String fName = first_name.getText();
+            String lName = last_name.getText();
+            String emailVal = email.getText();
 
+            // Check if fields are empty
+            if(fName.trim().isEmpty() || lName.trim().isEmpty() || emailVal.trim().isEmpty() || fName.equals("First Name") || lName.equals("Last Name") || emailVal.equals("Email")){
+                JOptionPane.showMessageDialog(null, "You left a text field empty!", "Submission Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                // Check if email is valid
+                if(EmailValidator.isValidEmail(emailVal)){
+                    DBConnection db = new DBConnection();
+                    db.insertStudent(fName, lName, emailVal);
+                    // Success Message
+                    JOptionPane.showMessageDialog(null, "Student successfully registered/added to class.", null, JOptionPane.INFORMATION_MESSAGE);
+                    first_name.setText("First Name");
+                    last_name.setText("Last Name");
+                    email.setText("Email");
+                }else{
+                    // Error Message (invalid email)
+                    JOptionPane.showMessageDialog(null, "Email is not valid!", "Submission Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 }
