@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SignInUpFrame extends JFrame implements ActionListener {
+    JPanel signInUpPanel;
+    JButton signUp;
     private String placeholderFirstName = "First Name";
-    JButton join;
+    private JButton signIn;
+
     SignInUpFrame(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -32,47 +35,30 @@ public class SignInUpFrame extends JFrame implements ActionListener {
         mottoPanel.add(userIconLabel);
 
         // RIGHT PANEL
-        JPanel signInUpPanel = new JPanel();
+        signInUpPanel = new JPanel();
         signInUpPanel.setBounds(350, 0, 450, 600);
         signInUpPanel.setBackground(Color.decode("#787878"));
         signInUpPanel.setLayout(null);
 
-        // sign in or sign up Label
-        JLabel sign = new JLabel("SIGN IN or SIGN UP");
-        sign.setBounds(75, 60, 300, 50);
-        sign.setFont(new Font("Dialog", Font.BOLD, 30));
-        sign.setForeground(Color.WHITE);
-        signInUpPanel.add(sign);
+        JLabel topRightLabel = new JLabel("CLASSROOM MANAGEMENT");
+        topRightLabel.setBounds(40, 70, 400, 60);
+        topRightLabel.setFont(new Font("Dialog", Font.BOLD, 25));
+        topRightLabel.setForeground(Color.WHITE);
+        signInUpPanel.add(topRightLabel);
 
-        // Form input fields
-        PlaceholderTextField first_name = new PlaceholderTextField("First Name");
-        first_name.setBounds(65, 180, 310, 30);
-        PlaceholderTextField last_name = new PlaceholderTextField("Last Name");
-        last_name.setBounds(65, 230, 310, 30);
-        PlaceholderTextField email = new PlaceholderTextField("Email");
-        email.setBounds(65, 280, 310, 30);
-        PlaceholderTextField subject = new PlaceholderTextField("Subject");
-        subject.setBounds(65, 330, 310, 30);
-        signInUpPanel.add(first_name);
-        signInUpPanel.add(last_name);
-        signInUpPanel.add(email);
-        signInUpPanel.add(subject);
-
-        // Form Join button
-        join = new JButton("JOIN");
-        join.setBounds(125, 400, 200, 35);
-        join.setFont(new Font("SansSerif", Font.BOLD, 18));
-        join.setBackground(Color.decode("#02CE8F"));
-        join.setForeground(Color.WHITE);
-        join.addActionListener(this);
-        signInUpPanel.add(join);
-
-        // button to take initial focus, so that textfield placeholders can show
-        JButton focusInitialButton = new JButton();
-        focusInitialButton.setBounds(450, 0, 0, 0);
-        focusInitialButton.requestFocusInWindow();
-        signInUpPanel.add(focusInitialButton);
-
+        signIn = new JButton("SIGN IN");
+        signIn.setBounds(145, 250, 130, 40);
+        signIn.setBackground(Color.decode("#FFFFFF"));
+        signIn.setFont(new Font("Dialog", Font.BOLD, 18));
+        signIn.addActionListener(this);
+        signInUpPanel.add(signIn);
+        signUp = new JButton("SIGN UP");
+        signUp.setBounds(145, 310, 130, 40);
+        signUp.setBackground(Color.decode("#02CE8F"));
+        signUp.setFont(new Font("Dialog", Font.BOLD, 18));
+        signUp.setForeground(Color.white);
+        signUp.addActionListener(this);
+        signInUpPanel.add(signUp);
 
 
         this.add(mottoPanel);
@@ -84,9 +70,17 @@ public class SignInUpFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == join){
-            this.dispose();
-            new MainFrame();
+        if(e.getSource() == signIn){
+            signInUpPanel.removeAll();
+            signInUpPanel.add(new SignInPanel());
+            signInUpPanel.revalidate();
+            signInUpPanel.repaint();
+        }
+        if(e.getSource() == signUp){
+            signInUpPanel.removeAll();
+            signInUpPanel.add(new SignUpPanel());
+            signInUpPanel.revalidate();
+            signInUpPanel.repaint();
         }
     }
 }

@@ -1,3 +1,5 @@
+import Authorization.Auth;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +14,7 @@ public class MainFrame extends JFrame implements ActionListener {
     JButton addStudentButton;
     JButton reportButton;
     JPanel mainPanel;
-    MainFrame(){
+    MainFrame(Auth auth){
         // Frame configurations
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(1200, 800);
@@ -108,7 +110,14 @@ public class MainFrame extends JFrame implements ActionListener {
         navTeachersButton.add(teachersText);
         // intervention, threshold
         navIntThrButton = new JButton();
-        navIntThrButton.addActionListener(this);
+        navIntThrButton.addActionListener(e -> {
+            if(e.getSource() == navIntThrButton){
+                mainPanel.removeAll();
+                mainPanel.add(new SetIntThr(auth));
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+        });
         navIntThrButton.setBorderPainted(false);
         navIntThrButton.setLayout(null);
         navIntThrButton.setPreferredSize(new Dimension(250, 60));
@@ -185,6 +194,7 @@ public class MainFrame extends JFrame implements ActionListener {
                 mainPanel.revalidate();
                 mainPanel.repaint();
             }
+
 
     }
 }
