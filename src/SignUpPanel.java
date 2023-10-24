@@ -97,7 +97,11 @@ public class SignUpPanel extends JPanel implements ActionListener {
                         window.dispose();
                     }
                     // Open Main Window
-                    new MainFrame(auth);
+                    Boolean isNotConfig = db.isNotConfigured();
+                    new MainFrame(auth, isNotConfig);
+                    if(!isNotConfig){
+                        new IntStrat(auth);
+                    }
                 }else{
                     // Error Message (invalid email)
                     JOptionPane.showMessageDialog(null, "Email is not valid!", "Submission Error", JOptionPane.ERROR_MESSAGE);

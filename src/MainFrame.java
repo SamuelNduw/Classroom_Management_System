@@ -14,14 +14,15 @@ public class MainFrame extends JFrame implements ActionListener {
     JButton addStudentButton;
     JButton reportButton;
     JPanel mainPanel;
-    MainFrame(Auth auth){
+    MainFrame(Auth auth, Boolean configured){
         // Frame configurations
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(1200, 800);
         this.setLayout(null);
         this.setTitle("Classroom Management System");
         this.setResizable(false);
-        this.setVisible(true);
+
+
 
         // Navigation Panel
         JPanel navPanel = new JPanel();
@@ -59,7 +60,14 @@ public class MainFrame extends JFrame implements ActionListener {
 
         // your class
         navClassButton = new JButton();
-        navClassButton.addActionListener(this);
+        navClassButton.addActionListener(e -> {
+            if(e.getSource() == navClassButton){
+                mainPanel.removeAll();
+                mainPanel.add(new YourClassPanel(auth));
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+        });
         navClassButton.setBorderPainted(false);
         navClassButton.setLayout(null);
         navClassButton.setPreferredSize(new Dimension(250, 60));
@@ -147,7 +155,15 @@ public class MainFrame extends JFrame implements ActionListener {
 
         // Nav Buttom Buttons
         addStudentButton = new JButton("ADD STUDENT");
-        addStudentButton.addActionListener(this);
+        addStudentButton.addActionListener(e -> {
+            // ADD STUDENT
+            if(e.getSource() == addStudentButton){
+                mainPanel.removeAll();
+                mainPanel.add(new AddStudentPanel(auth));
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+        });
         addStudentButton.setFont(new Font("Dialog", Font.BOLD, 20));
         addStudentButton.setForeground(Color.white);
         addStudentButton.setBackground(Color.decode("#373131"));
@@ -167,8 +183,10 @@ public class MainFrame extends JFrame implements ActionListener {
         mainPanel.setBounds(250, 0, 950, 800);
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setLayout(null);
+        mainPanel.add(new AddStudentPanel(auth));
         this.add(mainPanel);
 
+        this.setVisible(true);
     }
 
     @Override
@@ -180,13 +198,7 @@ public class MainFrame extends JFrame implements ActionListener {
                 mainPanel.revalidate();
                 mainPanel.repaint();
             }
-            // ADD STUDENT
-            if(e.getSource() == addStudentButton){
-                mainPanel.removeAll();
-                mainPanel.add(new AddStudentPanel());
-                mainPanel.revalidate();
-                mainPanel.repaint();
-            }
+
             // REPORT
             if(e.getSource() == reportButton){
                 mainPanel.removeAll();

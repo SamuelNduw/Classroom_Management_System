@@ -75,7 +75,11 @@ public class SignInPanel extends JPanel implements ActionListener {
                         window.dispose();
                     }
                     // Open Main Window
-                    new MainFrame(auth);
+                    Boolean isNotConfig = db.isNotConfigured();
+                    new MainFrame(auth, isNotConfig);
+                    if(isNotConfig){
+                        new IntStrat(auth);
+                    }
                     JOptionPane.showMessageDialog(null, "You have successfully Signed In.", null, JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     JOptionPane.showMessageDialog(null, "Email or Password is wrong try again!", "Authentication Error", JOptionPane.ERROR_MESSAGE);
